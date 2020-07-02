@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>API 연습2</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchName").keyup(function(event) {
+                if (event.which === 13) {
+                    $("#search").click();
+                }
+            });
+
+            $("#search").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v2/search/web",
+                    data: {query: $("#searchName").val()},
+                    headers: {Authorization: "KakaoAK 67e0974451f916d2823422baba0b0daf"}
+                })
+                    .done(function (msg) {
+                        console.log(msg.documents[0].title);
+                        console.log(msg.documents[0].url);
+                        console.log(msg.documents[0].datetime);
+                        console.log(msg.documents[0].contents);
+                        console.log(msg.documents[1].title);
+                        console.log(msg.documents[1].url);
+                        console.log(msg.documents[1].datetime);
+                        console.log(msg.documents[1].contents);
+                        console.log(msg.documents[2].title);
+                        console.log(msg.documents[2].url);
+                        console.log(msg.documents[2].datetime);
+                        console.log(msg.documents[2].contents);
+                        console.log(msg.documents[3].title);
+                        console.log(msg.documents[3].url);
+                        console.log(msg.documents[3].datetime);
+                        console.log(msg.documents[3].contents);
+
+                        $(".results").append("<a href='" + msg.documents[0].url + "'>" + msg.documents[0].title + "</a>");
+                        $(".results").append("<div class='monospace dateTime'>" + msg.documents[0].datetime + "</div>");
+                        $(".results").append("<div class='contents'>" + msg.documents[0].contents + "</div><br>");
+                        $(".results").append("<a href='" + msg.documents[1].url + "'>" + msg.documents[1].title + "</a>");
+                        $(".results").append("<div class='monospace dateTime'>" + msg.documents[1].datetime + "</div>");
+                        $(".results").append("<div class='contents'>" + msg.documents[1].contents + "</div><br>");
+                        $(".results").append("<a href='" + msg.documents[2].url + "'>" + msg.documents[2].title + "</a>");
+                        $(".results").append("<div class='monospace dateTime'>" + msg.documents[2].datetime + "</div>");
+                        $(".results").append("<div class='contents'>" + msg.documents[2].contents + "</div><br>");
+                        $(".results").append("<a href='" + msg.documents[3].url + "'>" + msg.documents[3].title + "</a>");
+                        $(".results").append("<div class='monospace dateTime'>" + msg.documents[3].datetime + "</div>");
+                        $(".results").append("<div class='contents'>" + msg.documents[3].contents + "</div><br>");
+                    });
+            })
+        })
+    </script>
+    <style>
+        .blueBox {
+            margin: auto;
+            width: 60%;
+            border: 3px solid dodgerblue;
+            padding: 30px;
+        }
+        .blueText {
+            color: #1e90ff;
+            font-size: 30px;
+        }
+        .searchBox {
+            width: 30%;
+            height: 20px;
+            border: 3px solid dodgerblue;
+            padding: 10px;
+        }
+        .searchButton {
+            width: 10%;
+            height: 46px;
+            border: 3px solid dodgerblue;
+        }
+        .centerText {
+            text-align: center;
+        }
+        .dateTime {
+            font-size: 10px;
+            padding-top: 10px;
+        }
+        .contents {
+            font-size: 12px;
+            padding: 10px 10px 20px 10px;
+        }
+        .results {
+        }
+        .monospace {
+            font-family: "JetBrains Mono", Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blueBox centerText blueText">
+        <img src="https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png" alt="다음" style="width:100px;height:100%">
+        <div class="blueText">
+            웹문서 검색 API TEST
+        </div>
+    </div>
+    <br>
+    <div class="centerText">
+        <input class="searchBox" id="searchName" value = "" type = "text" size="50">
+        <button class="searchButton" id="search">검색</button>
+    </div>
+    <br>
+    <div class="blueBox">
+        <div class="results"></div>
+    </div>
+
+</body>
+</html>
