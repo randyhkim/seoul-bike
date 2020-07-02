@@ -22,8 +22,8 @@
                         $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[3].parkingBikeTotCnt + "</div>");
                         $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[3].rackTotCnt + "</div>");
                         $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[3].shared + "</div>");
-                        $(".results").append("<div class=coordinates>" + msg.rentBikeStatus.row[3].stationLatitude +
-                            ", " + msg.rentBikeStatus.row[3].stationLongitude + "</div>");
+                        $(".results").append("<div class=coordinates>" + msg.rentBikeStatus.row[3].stationLatitude + "</div>" +
+                            ", " + "<div class=coordinates>" + msg.rentBikeStatus.row[3].stationLongitude + "</div>");
                         
                         $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[4].stationName + "</div>");
                         $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[4].parkingBikeTotCnt + "</div>");
@@ -155,26 +155,41 @@
 		};
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
-		var node = document.getElementsByClassName("stationName");
-        var stationName = node.textContent;
-		var node1 = document.getElementsByClassName("coordinates");
-		var coordinatesString = node1.textContent;
+		var locations = [];
+        $(".stationName").each(function(i) {
+            locations[i] = $(this);
+        });
+
+        var coordinateValues = [];
+        $(".coordinates").each(function(i) {
+            coordinateValues[i] = $(this);
+        });
 
 		//TODO: automate process
-		var positions = [
+		// var positions = [
+        //     {
+        //         title: '703',
+        //         latlng: new kakao.maps.LatLng(37.52406311, 126.87557983)
+        //     },
+        //     {
+        //         title: '785',
+        //         latlng: new kakao.maps.LatLng(37.51732635, 126.86630249)
+        //     },
+        // ];
+        var positions = [
             {
-                title: '703',
-                latlng: new kakao.maps.LatLng(37.52406311, 126.87557983)
+                title: locations[0],
+                latlng: new kakao.maps.LatLng(parseInt(coordinateValues[0]), parseInt(coordinateValues[1]))
             },
             {
-                title: '785',
+                title: locations[1],
+                // latlng: new kakao.maps.LatLng(coordinateValues[1]);
                 latlng: new kakao.maps.LatLng(37.51732635, 126.86630249)
-            },
-            {
-                title: stationName,
-                latlng: new kakao.maps.LatLng(coordinatesString)
             }
         ];
+
+        console.log(locations)
+        console.log(coordinateValues);
 
 		// Yellow circle markers
 		var yellowCircleSrc = 'https://www.bikeseoul.com/img/icon_big2.png';
