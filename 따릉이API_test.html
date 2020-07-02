@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>API 연습2</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "http://openapi.seoul.go.kr:8088/464c4c7a7968677235307061734167/json/bikeList/497/500/",
+                    data: {},
+                    // success: function(response) {}
+                })
+                    .done(function (msg) {
+                        alert(msg.rentBikeStatus.RESULT.MESSAGE);
+                        console.log(msg);
+
+                        // $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[0].stationName + "</div>");
+                        // $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[0].parkingBikeTotCnt + "</div>");
+                        // $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[0].rackTotCnt + "</div>");
+                        // $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[0].shared + "</div>");
+                        // $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[0].stationLongitude +
+                        //     "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[0].stationLatitude + "</div>");
+
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[3].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[3].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[3].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[3].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[3].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[3].stationLatitude + "</div>");
+                        
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[4].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[4].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[4].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[4].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[4].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[4].stationLatitude + "</div>");
+                        
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[7].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[7].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[7].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[7].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[7].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[7].stationLatitude + "</div>");
+
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[13].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[13].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[13].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[13].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[13].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[13].stationLatitude + "</div>");
+
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[52].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[52].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[52].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[52].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[52].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[52].stationLatitude + "</div>");
+                        
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[68].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[68].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[68].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[68].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[68].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[68].stationLatitude + "</div>");
+
+                        $(".results").append("<div class=stationName>" + msg.rentBikeStatus.row[76].stationName + "</div>");
+                        $(".results").append("<div class=contents>parkingBikeTotCnt = " + msg.rentBikeStatus.row[76].parkingBikeTotCnt + "</div>");
+                        $(".results").append("<div class=contents>rackTotCnt = " + msg.rentBikeStatus.row[76].rackTotCnt + "</div>");
+                        $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[76].shared + "</div>");
+                        $(".results").append("<div class=contents>X = " + msg.rentBikeStatus.row[76].stationLongitude +
+                            "&nbsp;&nbsp;&nbsp;Y = " + msg.rentBikeStatus.row[76].stationLatitude + "</div>");
+                    });
+            })
+        })
+    </script>
+    <style>
+        .blueBox {
+            margin: auto;
+            width: 60%;
+            border: 3px solid dodgerblue;
+            padding: 30px;
+        }
+        .blueText {
+            color: #1e90ff;
+            font-size: 30px;
+        }
+        .searchButton {
+            width: 300px;
+            height: 80px;
+            border: 3px solid dodgerblue;
+            font-size: 20px;
+        }
+        .centerText {
+            text-align: center;
+        }
+        .stationName {
+            font-size: 20px;
+            padding: 15px 10px 10px 0px;
+        }
+        .contents {
+            font-size: 12px;
+            padding: 0px 10px 5px 20px;
+        }
+        .results {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blueBox centerText blueText">
+        <div class="blueText">따릉이 API TEST</div>
+    </div>
+    <br>
+    <div class="centerText">
+        <button class="searchButton" id="search">정보 요청하기</button>
+    </div>
+    <br>
+    <div class="blueBox">
+        <div class="results">
+            확인된 사항:<br>
+            &nbsp;&nbsp;&nbsp;rackTotCnt = 거치대개수<br>
+            &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = 자전거주차총건수<br>
+            &nbsp;&nbsp;&nbsp;shared = 거치율<br>
+            &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = parkingRack + parkingQRBikeCnt<br>
+            &nbsp;&nbsp;&nbsp;추후 LCD 자전거 거치건수와 QR 자전거 거치건수를 신규 컬럼으로 추가해 서비스 할 예정입니다.<br><br>
+            추정되는 사항:<br>
+            &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = 거치중인 자전거 수 (LCD형 & QR형)<br>
+            &nbsp;&nbsp;&nbsp;rackTotCnt = 거치대수(+2)
+        </div>
+    </div>
+
+</body>
+</html>
