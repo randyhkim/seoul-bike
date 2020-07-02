@@ -20,12 +20,12 @@ Jquery와 AJAX를 이용하여 Daum 웹문서 및 도서검색 API 사용법 및
 
 [서울자전거 따릉이 대여소 조회 공식 사이트](https://www.bikeseoul.com/app/station/moveStationRealtimeStatus.do)
 
-| 사용 API:                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------ |
+| 사용 API                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------- |
 | [Daum 검색 API Kakao Developers](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide)          |
-| [Kakao 지도 API Kakao Developers](https://apis.map.kakao.com/web/guide/)         |
-| [서울특별시 공공자전거 실시간 대여정보 Open API](http://data.seoul.go.kr/dataList/OA-15493/A/1/datasetView.do#) |
+| [Kakao 지도 API Kakao Developers](https://apis.map.kakao.com/web/guide/)                                     |
+| [서울특별시 공공자전거 실시간 대여정보 Open API](http://data.seoul.go.kr/dataList/OA-15493/A/1/datasetView.do#)    |
 
-| 참고 영상:                                                                                                               |
-| ------------------------------------------------------------------------------------------------------------------------|
-| [[JavaScript 기초와 활용 #2] API의 개념과 활용! 카카오 책 검색 기능 구현하기](https://www.youtube.com/watch?v=QPEUU89AOg8&list=PLU9-uwewPMe0ynomccdrAX2CtVbahN4hD&index=10)                                                                         |
+| 참고 영상                                                                                                                |
+| ----------------------------------------------------------------------------------------------------------------------- |
+| [[JavaScript 기초와 활용 #2] API의 개념과 활용! 카카오 책 검색 기능 구현하기](https://www.youtube.com/watch?v=QPEUU89AOg8&list=PLU9-uwewPMe0ynomccdrAX2CtVbahN4hD&index=10) |
