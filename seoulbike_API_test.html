@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>서울 공공자전거(따릉이) API TEST</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- jquery import -->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      ;
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      ;
+      crossorigin="anonymous"
+      ;
+    ></script>
+    <!-- kakao api import -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=67e0974451f916d2823422baba0b0daf"
+    ></script>
+  </head>
+  <body>
+    <div class="blueBox centerText blueTitle">
+      <div class="blueTitle">서울 공공자전거(따릉이) API TEST</div>
+    </div>
+    <br />
+
+    <div class="centerText">
+      <button class="searchButton" id="search">정보 요청하기</button>
+    </div>
+    <br />
+
+    <div class="blueBox">
+      <div class="results"></div>
+    </div>
+    <br />
+    <div class="blueBox" id="map" style="width: 60%; height: 400px;"></div>
+    <br />
+
+    <!-- Additional Info Box -->
+    <div class="blueBox additionalInfo">
+      확인된 사항:<br />
+      &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = 자전거주차총건수<br />
+      &nbsp;&nbsp;&nbsp;rackTotCnt = 거치대개수<br />
+      &nbsp;&nbsp;&nbsp;shared = 거치율<br />
+      &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = parkingRack + parkingQRBikeCnt<br />
+      &nbsp;&nbsp;&nbsp;추후 LCD 자전거 거치건수와 QR 자전거 거치건수를 신규
+      컬럼으로 추가해 서비스 할 예정입니다.<br /><br />
+      추정되는 사항:<br />
+      &nbsp;&nbsp;&nbsp;parkingBikeTotCnt = 거치중인 자전거 수 (LCD형 & QR형)<br />
+      &nbsp;&nbsp;&nbsp;rackTotCnt = 거치대수(+2)<br /><br />
+      <div class="centerText">
+        <b>Developed by Randy "VandyRandy" Kim and Ivan Kim</b><br />
+      </div>
+    </div>
+    <script src="main.js"></script>
+    <script src="kakao.js"></script>
+  </body>
+</html>
