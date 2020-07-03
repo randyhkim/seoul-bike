@@ -73,17 +73,69 @@
                         $(".results").append("<div class=contents>shared = " + msg.rentBikeStatus.row[76].shared + "</div>");
                         $(".results").append("<div class=coordinates>" + msg.rentBikeStatus.row[76].stationLatitude +
                             ", " + msg.rentBikeStatus.row[76].stationLongitude + "</div>");
+
+                        // Add stationName and coordinates to global var list
+                        //TODO: automate coordinate marker process
+                        var locations = [];
+                        var coordinateValues = [];
+                        locations[0] = msg.rentBikeStatus.row[3].stationName;   // 오목교 7번 출구
+                        locations[1] = msg.rentBikeStatus.row[68].stationName;  // 양천보건소 사잇길
+                        coordinateValues[0] = parseFloat(msg.rentBikeStatus.row[3].stationLatitude);
+                        coordinateValues[1] = parseFloat(msg.rentBikeStatus.row[3].stationLongitude);
+
+                        console.log(locations);
+                        console.log(coordinateValues);
+
+                        var positions = [
+                            {
+                                title: locations[0],
+                                // latlng: new kakao.maps.LatLng(parseInt(coordinateValues[0]), parseInt(coordinateValues[1]))
+                                latlng: new kakao.maps.LatLng(coordinateValues[0], coordinateValues[1])
+                            },
+                            {
+                                title: locations[1],
+                                // latlng: new kakao.maps.LatLng(coordinateValues[1]);
+                                latlng: new kakao.maps.LatLng(37.51732635, 126.86630249)
+                            }
+                        ];
+
+                        // Yellow circle markers
+                        var yellowCircleSrc = 'https://www.bikeseoul.com/img/icon_big2.png';
+
+                        for (var i = 0; i < positions.length; i++) {
+                            var yellowCircleSize = new kakao.maps.Size(15, 18), // 마커이미지의 크기입니다
+                                yellowCircleOption = {offset: new kakao.maps.Point(3, 12)}; //마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+                            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+                            var yellowCircleImage = new kakao.maps.MarkerImage(yellowCircleSrc, yellowCircleSize, yellowCircleOption)
+
+                            // 마커를 생성합니다
+                            var yellowCircle = new kakao.maps.Marker({
+                                map: map,
+                                position: positions[i].latlng,
+                                title: positions[i].title,
+                                image: yellowCircleImage // 마커이미지 설정
+                            });
+                        }
+
+                        // Green circle markers
+                        // var greenCircleSrc = 'https://www.bikeseoul.com/img/icon_big1.png',
+                        //     greenCircleSize = new kakao.map.Size(15, 18),
+                        //     greenCircleOption = {offset: new kakao.maps.Point(3, 12)};
+                        //
+                        // var greenCircleImage = new kakao.maps.MarkerImage(greenCircleSrc, greenCircleSize, greenCircleOption),
+                        //     greenCirclePosition = new kakao.maps.LatLng(37.5240631, 126.87557983);
+                        //
+                        // var greenCircle = new kakao.maps.Marker({
+                        //     position: greenCirclePosition,
+                        //     image: greenCircleImage
+                        // });
+
+                        // 마커가 지도 위에 표시되도록 설정합니다
+                        yellowCircle.setMap(map);
+                        // greenCircle.setMap(map);
                     });
             })
-            // $.ajax({
-            //     method: "GET",
-            //     url: "//dapi.kakao.com/v2/maps/sdk.js?appkey=d41ef9ca3911495e4ad4aaa33aa2387d",
-            //     data: {}
-            // })
-            // .done(functino (data) {
-            //     alert("Successful");
-            //     console.log(data);
-            // });
         })
     </script>
     <style>
@@ -154,78 +206,6 @@
 			level: 5
 		};
 		var map = new kakao.maps.Map(mapContainer, mapOption);
-
-		var locations = [];
-        $(".stationName").each(function(i) {
-            locations[i] = $(this);
-        });
-
-        var coordinateValues = [];
-        $(".coordinates").each(function(i) {
-            coordinateValues[i] = $(this);
-        });
-
-		//TODO: automate process
-		// var positions = [
-        //     {
-        //         title: '703',
-        //         latlng: new kakao.maps.LatLng(37.52406311, 126.87557983)
-        //     },
-        //     {
-        //         title: '785',
-        //         latlng: new kakao.maps.LatLng(37.51732635, 126.86630249)
-        //     },
-        // ];
-        var positions = [
-            {
-                title: locations[0],
-                latlng: new kakao.maps.LatLng(parseInt(coordinateValues[0]), parseInt(coordinateValues[1]))
-            },
-            {
-                title: locations[1],
-                // latlng: new kakao.maps.LatLng(coordinateValues[1]);
-                latlng: new kakao.maps.LatLng(37.51732635, 126.86630249)
-            }
-        ];
-
-        console.log(locations)
-        console.log(coordinateValues);
-
-		// Yellow circle markers
-		var yellowCircleSrc = 'https://www.bikeseoul.com/img/icon_big2.png';
-
-		for (var i = 0; i < positions.length; i++) {
-            var yellowCircleSize = new kakao.maps.Size(15, 18), // 마커이미지의 크기입니다
-                yellowCircleOption = {offset: new kakao.maps.Point(3, 12)}; //마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
-            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-            var yellowCircleImage = new kakao.maps.MarkerImage(yellowCircleSrc, yellowCircleSize, yellowCircleOption)
-
-            // 마커를 생성합니다
-            var yellowCircle = new kakao.maps.Marker({
-                map: map,
-                position: positions[i].latlng,
-                title: positions[i].title,
-                image: yellowCircleImage // 마커이미지 설정
-            });
-        }
-        
-        // Green circle markers
-        // var greenCircleSrc = 'https://www.bikeseoul.com/img/icon_big1.png',
-        //     greenCircleSize = new kakao.map.Size(15, 18),
-        //     greenCircleOption = {offset: new kakao.maps.Point(3, 12)};
-        //
-        // var greenCircleImage = new kakao.maps.MarkerImage(greenCircleSrc, greenCircleSize, greenCircleOption),
-        //     greenCirclePosition = new kakao.maps.LatLng(37.5240631, 126.87557983);
-        //
-        // var greenCircle = new kakao.maps.Marker({
-        //     position: greenCirclePosition,
-        //     image: greenCircleImage
-        // });
-
-        // 마커가 지도 위에 표시되도록 설정합니다
-        yellowCircle.setMap(map);
-        // greenCircle.setMap(map);
 	</script>
     <br>
 
