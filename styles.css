@@ -1,0 +1,40 @@
+.blueBox {
+  margin: auto;
+  width: 60%;
+  border: 5px solid dodgerblue;
+  padding: 30px;
+}
+
+.blueTitle {
+  color: dodgerblue;
+  font-size: 30px;
+  font-weight: bold;
+}
+.searchButton {
+  width: 300px;
+  height: 80px;
+  border: 5px solid dodgerblue;
+  font-size: 20px;
+}
+.centerText {
+  text-align: center;
+}
+.stationName {
+  font-size: 20px;
+  padding: 15px 10px 10px 0;
+}
+.contents {
+  font-size: 12px;
+  padding: 0 10px 5px 20px;
+}
+
+.coordinates {
+  font-size: 12px;
+  padding: 0 10px 5px 20px;
+}
+.results {
+  font-size: 12px;
+}
+.additionalInfo {
+  font-size: 12px;
+}
