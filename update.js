@@ -5,12 +5,11 @@ let resultBox = document.getElementById("results");
 let stationList = [4, 7, 9, 10, 3]; // index of stations interested in
 let locations = [];         // list of text of stationName
 let coordinateValues = [];  // list of floats of stationLatitude and stationLongitude
-// let coordinateValues = [37.52325439, 126.86490631];  // list of floats of stationLatitude and stationLongitude
 // let locations = new Array();
 // let coordinateValues = new Array();
 
 // append info about each indexed station to result box
-function stationUpdate(msg, index, locations, coordinateValues) {
+function stationUpdate(msg, index) {
   resultBox.innerHTML +=
     "<div class=stationName>" +
     msg.rentBikeStatus.row[index].stationName +
@@ -39,7 +38,7 @@ function stationUpdate(msg, index, locations, coordinateValues) {
 }
 
 // AJAX from bike api and parse responseText into json
-function update(locations, coordinateValues) {
+function update() {
   resultBox.innerHTML = "";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -62,7 +61,7 @@ function update(locations, coordinateValues) {
 }
 
 button.onclick = function() {
-  update(locations, coordinateValues);
+  update();
   setTimeout(function() {
     lib.showMarker(locations, coordinateValues);
   }, 2000);
