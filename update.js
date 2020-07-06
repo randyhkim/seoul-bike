@@ -7,6 +7,7 @@ let locations = [];         // list of text of stationName
 let coordinateValues = [];  // list of floats of stationLatitude and stationLongitude
 // let locations = new Array();
 // let coordinateValues = new Array();
+let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
 
 // append info about each indexed station to result box
 function stationUpdate(msg, index) {
@@ -54,7 +55,7 @@ function update() {
   };
   xhttp.open(
     "GET",
-    "http://openapi.seoul.go.kr:8088/464c4c7a7968677235307061734167/json/bikeList/497/500/",
+    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
     true
   );
   xhttp.send();

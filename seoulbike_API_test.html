@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>서울 공공자전거(따릉이) API TEST</title>
     <link rel="stylesheet" href="styles.css" />
+
     <!-- jquery CDN import -->
 <!--    <script-->
 <!--      type="text/javascript"-->
@@ -11,10 +12,12 @@
 <!--      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="-->
 <!--      crossorigin="anonymous"-->
 <!--    ></script>-->
+
     <!-- kakao api import -->
+    <!-- key does not need to be private; pre-selected servers only will have access -->
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=67e0974451f916d2823422baba0b0daf"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d41ef9ca3911495e4ad4aaa33aa2387d"
     ></script>
   </head>
   <body>
@@ -50,6 +53,8 @@
         <b>Developed by Randy "VandyRandy" Kim and Ivan Kim</b><br>
       </div>
     </div>
+    <!-- config.js is private and not uploaded to Github due to security reasons -->
+    <script type='text/javascript' src='config.js'></script>
     <script type='module' src="update.js"></script>
     <script type='text/javascript' src="kakao.js"></script>
   </body>

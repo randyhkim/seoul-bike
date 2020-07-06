@@ -1,5 +1,3 @@
-// import * as update from '/update.js';
-
 // Show Kakao Map element
 var mapContainer = document.getElementById("map");
 var mapOption = {
