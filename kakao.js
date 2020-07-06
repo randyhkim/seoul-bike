@@ -12,28 +12,13 @@ export function showMarker(locations, coordinateValues) {
     // List of station names (locations) and coordinateValues
     console.log(locations);
     console.log(coordinateValues);
-    var positions = [
-      {
-          title: locations[0],
-          latlng: new kakao.maps.LatLng(coordinateValues[0], coordinateValues[1])
-      },
-      {
-          title: locations[1],
-          latlng: new kakao.maps.LatLng(coordinateValues[2], coordinateValues[3])
-      },
-      {
-          title: locations[2],
-          latlng: new kakao.maps.LatLng(coordinateValues[4], coordinateValues[5])
-      },
-      {
-          title: locations[3],
-          latlng: new kakao.maps.LatLng(coordinateValues[6], coordinateValues[7])
-      },
-      {
-          title: locations[4],
-          latlng: new kakao.maps.LatLng(coordinateValues[8], coordinateValues[9])
-      }
-    ];
+    let positions = [];
+    for (let i=0; i< locations.length; i++) {
+        positions.push({
+            title: locations[i],
+            latlng: new kakao.maps.LatLng(coordinateValues[2 * i], coordinateValues[2 * i + 1])
+        });
+    }
 
     // Yellow circle markers
     var yellowCircleSrc = 'https://www.bikeseoul.com/img/icon_big2.png';

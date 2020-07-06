@@ -2,7 +2,9 @@ import * as lib from './kakao.js'
 
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
-let stationList = [4, 7, 9, 10, 3]; // index of stations interested in
+// list of indices of all stations in Yangcheon-gu
+let stationList = [];
+for (let i = 2; i <= 81; i++) {stationList.push(i);}
 let locations = [];         // list of text of stationName
 let coordinateValues = [];  // list of floats of stationLatitude and stationLongitude
 // let locations = new Array();
