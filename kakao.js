@@ -58,3 +58,26 @@ function drawMarker(positions, CircleSrc) {
     let CircleMarker = createMarker(positions, CircleSrc);
     CircleMarker.setMap(map);
 }
+
+// show my location as marker on Kakao Map
+// TODO: use HTML Geolocation API
+export function showLocationMarker() {
+    let positions = {
+        title: '현재 위치',
+        // latlng: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
+        latlng: new kakao.maps.LatLng(37.5363535, 126.85730799999999)
+    };
+
+    let markerSize = new kakao.maps.Size(40, 40);
+    let markerOption = {offset: new kakao.maps.Point(3, 12)};
+    let markerSrc = 'https://www.bikeseoul.com/img/my_location_bp.gif';
+    let markerImage = new kakao.maps.MarkerImage(markerSrc, markerSize, markerOption);
+
+    let marker = new kakao.maps.Marker({
+       map: map,
+       position: positions.latlng,
+       title: positions.title,
+       image: markerImage
+    });
+    marker.setMap(map);
+}

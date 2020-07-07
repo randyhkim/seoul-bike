@@ -83,6 +83,7 @@ button.onclick = function() {
   setTimeout(function() {
     lib.showMarker(locationsGreen, coordinateValuesGreen, 'green');
     lib.showMarker(locationsYellow, coordinateValuesYellow, 'yellow');
+    lib.showLocationMarker();
   }, 2000);
   // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
   // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
