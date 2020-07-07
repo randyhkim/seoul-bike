@@ -1,4 +1,4 @@
-import * as lib from './kakao.js'
+import * as kakao from './kakao.js'
 
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
@@ -7,6 +7,7 @@ let resultBox = document.getElementById("results");
 // 서울시에서 대여소 리스트를 계속 업데이트하기 때문에 START, END 값이 계속 변경됨.
 // YELLOW_STATION_START를 포함한 이후 순번 대여소부터는 신형(QR형, Yellow) 대여소임.
 // 그 이전은 구형(LCD형, Green) 대여소임.
+// 이하 코드에서는 Green과 Yellow는 각각 구형(LCD)과 신형(QR) 대여소를 지칭함을 알림.
 let YANGCHEONGU_START = 3;      // 700. KB국민은행 염창역 지점 앞
 let YANGCHEONGU_END = 82;       // 797.목동아파트 1422동 1434동 사잇길
 let YELLOW_STATION_START = 57   // 767. 신정숲속마을아파트
@@ -21,7 +22,75 @@ let locationsYellow = [];         // list of text of Yellow stationName
 let coordinateValuesYellow = [];  // list of floats of Yellow stationLatitude and stationLongitude
 let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
 
-// append info about each indexed station to result box
+
+// main function start when webpage is loaded
+window.onload = function() {
+    main();
+}
+
+
+function main() {
+    // Function when user is successfully located
+    function success(position) {
+        let myLatitude = position.coords.latitude;
+        let myLongitude = position.coords.longitude;
+        let map = kakao.showMap(myLatitude, myLongitude);
+        // show my location marker
+        kakao.showLocationMarker(map, myLatitude, myLongitude);
+        console.log(myLatitude, myLongitude);
+
+        // Function when button is clicked
+        button.onclick = function() {
+          update();
+          setTimeout(function() {
+            // TODO: redraw markers when clicking again instead of drawing new markers
+            kakao.showMarker(map, locationsGreen, coordinateValuesGreen, 'green');
+            kakao.showMarker(map, locationsYellow, coordinateValuesYellow, 'yellow');
+          }, 2000);
+          // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
+          // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
+        };
+    }
+    // Alerts error when geolocation is true but location cannot be retrieved
+    function error() {
+        alert('ERROR: Unable to retrieve your location');
+    }
+
+    // Check if geolocation is retrieved
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+    else {
+        alert("This browser does not support HTML Geolocation.");
+    }
+}
+
+
+// AJAX from bike api and parse responseText into json
+function update() {
+  resultBox.innerHTML = "";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let msg = JSON.parse(this.responseText);
+      console.log(msg);
+      alert(msg.rentBikeStatus.RESULT.MESSAGE);
+      stationList.forEach((i) => {
+        stationUpdate(msg, i);
+      });
+    }
+  };
+  xhttp.open(
+    "GET",
+    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
+    true
+  );
+  xhttp.send();
+}
+
+/* Each station's info is shown on the web page
+   and name/latitude/longitude is appended to either locationsGreen and coordinateValuesGreen
+   or locationsYellow and coordinateValuesYellow */
 function stationUpdate(msg, index) {
   resultBox.innerHTML +=
     "<div class=stationName>" +
@@ -55,41 +124,3 @@ function stationUpdate(msg, index) {
     coordinateValuesYellow.push(parseFloat(msg.rentBikeStatus.row[index].stationLongitude));
   }
 }
-
-// AJAX from bike api and parse responseText into json
-function update() {
-  resultBox.innerHTML = "";
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      let msg = JSON.parse(this.responseText);
-      console.log(msg);
-      alert(msg.rentBikeStatus.RESULT.MESSAGE);
-      stationList.forEach((i) => {
-        stationUpdate(msg, i);
-      });
-    }
-  };
-  xhttp.open(
-    "GET",
-    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
-    true
-  );
-  xhttp.send();
-}
-
-button.onclick = function() {
-  update();
-  setTimeout(function() {
-    lib.showMarker(locationsGreen, coordinateValuesGreen, 'green');
-    lib.showMarker(locationsYellow, coordinateValuesYellow, 'yellow');
-    lib.showLocationMarker();
-  }, 2000);
-  // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
-  // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
-  // compare console.log below and console.log in lib.showMarker
-  console.log(locationsGreen);
-  console.log(coordinateValuesGreen);
-  console.log(locationsYellow);
-  console.log(coordinateValuesYellow);
-};

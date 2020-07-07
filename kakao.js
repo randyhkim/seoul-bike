@@ -1,14 +1,26 @@
-// Show Kakao Map element
-let mapContainer = document.getElementById("map");
-let mapOption = {
-  center: new kakao.maps.LatLng(37.520503, 126.869097),
-  // level: 5,
-  level: 7
-};
-let map = new kakao.maps.Map(mapContainer, mapOption);
+/* In this module, two functions are for use:
+      1. showMap(latitude, longitude);
+      2. showMarker(map, locations, coordinateValues, color='green');
+   The rest are private and best left untouched! */
 
-// Show station markers on Kakao Map
-export function showMarker(locations, coordinateValues, color='green') {
+
+/* Shows Kakao Map and returns map entity */
+export function showMap(latitude, longitude) {
+    // latitude and longitude are coordinate values at which
+    // the map will be centered when initially shown on the webpage
+    let mapContainer = document.getElementById("map");
+    let mapOption = {
+      center: new kakao.maps.LatLng(latitude, longitude),
+      level: 5
+    };
+    return new kakao.maps.Map(mapContainer, mapOption);
+    // Map entity is inputted in other functions
+    // to specify which map to perform those functions
+}
+
+
+/* Show station markers on Kakao Map */
+export function showMarker(map, locations, coordinateValues, color='green') {
     // locations is list of name of stations
     // coordinateValues is list of latitude and longitude values of stations
     // color is either 'green' or 'yellow' and specifies color of marker
@@ -25,23 +37,26 @@ export function showMarker(locations, coordinateValues, color='green') {
 
     if (color == 'green') {
         let CircleSrc = 'https://www.bikeseoul.com/img/icon_big1.png'
-        drawMarker(positions, CircleSrc);
+        drawMarker(map, positions, CircleSrc);
     }
     else {
         let CircleSrc = 'https://www.bikeseoul.com/img/icon_big2.png';
-        drawMarker(positions, CircleSrc);
+        drawMarker(map, positions, CircleSrc);
     }
 }
 
+
+/* The following functions are intended to be private. */
+
 // 마커를 생성합니다
-function createMarker(positions, CircleSrc) {
-    for (var i = 0; i < positions.length; i++) {
-        var CircleSize = new kakao.maps.Size(15, 18), // 마커이미지의 크기입니다
-            CircleOption = {offset: new kakao.maps.Point(3, 12)}; //마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+function createMarker(map, positions, CircleSrc) {
+    let CircleSize = new kakao.maps.Size(15, 18),   // 마커이미지의 크기입니다
+        CircleOption = {offset: new kakao.maps.Point(3, 12)};   // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    let CircleImage = new kakao.maps.MarkerImage(CircleSrc, CircleSize, CircleOption)
 
-        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-        var CircleImage = new kakao.maps.MarkerImage(CircleSrc, CircleSize, CircleOption)
-
+    // TODO: see if there's a way to use let instead of var
+    for (let i = 0; i < positions.length; i++) {
         // 마커를 생성합니다
         var CircleMarker = new kakao.maps.Marker({
             map: map,
@@ -54,22 +69,20 @@ function createMarker(positions, CircleSrc) {
 }
 
 // 마커가 지도 위에 표시되도록 설정합니다.
-function drawMarker(positions, CircleSrc) {
-    let CircleMarker = createMarker(positions, CircleSrc);
+function drawMarker(map, positions, CircleSrc) {
+    let CircleMarker = createMarker(map, positions, CircleSrc);
     CircleMarker.setMap(map);
 }
 
 // show my location as marker on Kakao Map
-// TODO: use HTML Geolocation API
-export function showLocationMarker() {
+export function showLocationMarker(map, latitude, longitude) {
     let positions = {
         title: '현재 위치',
-        // latlng: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
-        latlng: new kakao.maps.LatLng(37.5363535, 126.85730799999999)
+        latlng: new kakao.maps.LatLng(latitude, longitude)
+        // latlng: new kakao.maps.LatLng(37.5363535, 126.85730799999999)
     };
-
     let markerSize = new kakao.maps.Size(40, 40);
-    let markerOption = {offset: new kakao.maps.Point(3, 12)};
+    let markerOption = {offset: new kakao.maps.Point(20, 30)};
     let markerSrc = 'https://www.bikeseoul.com/img/my_location_bp.gif';
     let markerImage = new kakao.maps.MarkerImage(markerSrc, markerSize, markerOption);
 
