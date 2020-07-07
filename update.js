@@ -11,13 +11,9 @@ let YANGCHEONGU_START = 3;      // 700. KB국민은행 염창역 지점 앞
 let YANGCHEONGU_END = 82;       // 797.목동아파트 1422동 1434동 사잇길
 let YELLOW_STATION_START = 57   // 767. 신정숲속마을아파트
 
-// list of indices of all Green (LCD) stations in Yangcheon-gu
-let stationListGreen = [];
-for (let i = YANGCHEONGU_START; i < YELLOW_STATION_START; i++) {stationListGreen.push(i);}
-
-// list of indices of all Yellow (QR) stations in Yangcheon-gu
-let stationListYellow = [];
-for (let i = YELLOW_STATION_START; i <= YANGCHEONGU_END; i++) {stationListYellow.push(i);}
+// list of indices of all stations in Yangcheon-gu
+let stationList = [];
+for (let i = YANGCHEONGU_START; i < YANGCHEONGU_END; i++) {stationList.push(i);}
 
 let locationsGreen = [];         // list of text of Green stationName
 let coordinateValuesGreen = [];  // list of floats of Green stationLatitude and stationLongitude
@@ -46,11 +42,13 @@ function stationUpdate(msg, index) {
     msg.rentBikeStatus.row[index].stationLongitude +
     "</div>";
 
+  // If index is smaller than YELLOW_STATION_START, the station is Green (LCD)
   if (index < YELLOW_STATION_START) {
     locationsGreen.push(msg.rentBikeStatus.row[index].stationName);
     coordinateValuesGreen.push(parseFloat(msg.rentBikeStatus.row[index].stationLatitude));
     coordinateValuesGreen.push(parseFloat(msg.rentBikeStatus.row[index].stationLongitude));
   }
+  // Else, the station is Yellow (QR)
   else {
     locationsYellow.push(msg.rentBikeStatus.row[index].stationName);
     coordinateValuesYellow.push(parseFloat(msg.rentBikeStatus.row[index].stationLatitude));
@@ -67,12 +65,7 @@ function update() {
       let msg = JSON.parse(this.responseText);
       console.log(msg);
       alert(msg.rentBikeStatus.RESULT.MESSAGE);
-      // console.log(stationList);
-      stationListGreen.forEach((i) => {
-        // stationUpdate(msg, i, locations, coordinateValues);
-        stationUpdate(msg, i);
-      });
-      stationListYellow.forEach((i) => {
+      stationList.forEach((i) => {
         stationUpdate(msg, i);
       });
     }
@@ -88,12 +81,12 @@ function update() {
 button.onclick = function() {
   update();
   setTimeout(function() {
-    lib.showMarkerGreen(locationsGreen, coordinateValuesGreen);
-    lib.showMarkerYellow(locationsYellow, coordinateValuesYellow);
+    lib.showMarker(locationsGreen, coordinateValuesGreen, 'green');
+    lib.showMarker(locationsYellow, coordinateValuesYellow, 'yellow');
   }, 2000);
   // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
   // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
-  // compare console.log(locations); and console.log(coordinateValues); below and those in lib.showMarker
+  // compare console.log below and console.log in lib.showMarker
   console.log(locationsGreen);
   console.log(coordinateValuesGreen);
   console.log(locationsYellow);
