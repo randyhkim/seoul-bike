@@ -95,5 +95,7 @@ button.onclick = function() {
   // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
   // compare console.log(locations); and console.log(coordinateValues); below and those in lib.showMarker
   console.log(locationsGreen);
-  console.log(coordinateValues);
+  console.log(coordinateValuesGreen);
+  console.log(locationsYellow);
+  console.log(coordinateValuesYellow);
 };
