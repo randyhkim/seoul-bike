@@ -1,7 +1,9 @@
 import * as kakao from './kakao.js'
 
+// Define button, resultBox, mapContainer elements
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
+let mapContainer = document.getElementById("map");
 
 // Variable integer values declared for ease of edit
 // 서울시에서 대여소 리스트를 계속 업데이트하기 때문에 START, END 값이 계속 변경됨.
@@ -23,20 +25,19 @@ let coordinateValuesYellow = [];  // list of floats of Yellow stationLatitude an
 let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
 
 
-// main function start when webpage is loaded
+// main function starts when webpage is loaded
 window.onload = function() {
     main();
 }
 
-
+// The main function
 function main() {
     // Function when user is successfully located
     function success(position) {
         let myLatitude = position.coords.latitude;
         let myLongitude = position.coords.longitude;
-        let map = kakao.showMap(myLatitude, myLongitude);
-        // show my location marker
-        kakao.showLocationMarker(map, myLatitude, myLongitude);
+        let map = kakao.showMap(mapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        kakao.showLocationMarker(map, myLatitude, myLongitude);     // show marker on user location
         console.log(myLatitude, myLongitude);
 
         // Function when button is clicked
@@ -90,7 +91,7 @@ function update() {
 
 /* Each station's info is shown on the web page
    and name/latitude/longitude is appended to either locationsGreen and coordinateValuesGreen
-   or locationsYellow and coordinateValuesYellow */
+   or locationsYellow and coordinateValuesYellow depending on index value */
 function stationUpdate(msg, index) {
   resultBox.innerHTML +=
     "<div class=stationName>" +
