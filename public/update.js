@@ -4,7 +4,7 @@ import * as googleMaps from './googleMaps.js'
 // Define button, resultBox, mapContainer elements
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
-let mapContainer = document.getElementById("map");
+let KakaoMapContainer = document.getElementById("KakaoMap");
 let GoogleMapContainer = document.getElementById("GoogleMap");
 
 // Variable integer values declared for ease of edit
@@ -38,7 +38,7 @@ function main() {
     function success(position) {
         let myLatitude = position.coords.latitude;
         let myLongitude = position.coords.longitude;
-        let map = kakao.showMap(mapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        let map = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
         kakao.showLocationMarker(map, myLatitude, myLongitude);     // show marker on user location
 
         googleMaps.initMap(GoogleMapContainer, myLatitude, myLongitude);
@@ -49,6 +49,7 @@ function main() {
           update();
           setTimeout(function() {
             // TODO: redraw markers when clicking again instead of drawing new markers
+            // kakao.setOnMap(map, null);
             kakao.showMarker(map, locationsGreen, coordinateValuesGreen, 'green');
             kakao.showMarker(map, locationsYellow, coordinateValuesYellow, 'yellow');
           }, 2000);

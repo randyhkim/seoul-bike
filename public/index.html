@@ -20,11 +20,18 @@
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d41ef9ca3911495e4ad4aaa33aa2387d"
     ></script>
 
-    <!-- Google Maps API import -->
+    <!-- Google Maps Javascript API import -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"
     ></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnzo0x8vMgME3Jr3UUFVpmR_8aIx-pM4w&callback=initMap&libraries=&v=weekly"
+    ></script>
+<!--    <script-->
+<!--      src="/maps/documentation/javascript/examples/markerclusterer/markerclustererplus@4.0.1.min.js"-->
+<!--    ></script>-->
+    <!-- Import MarkerClustererPlus Library from Google Maps -->
+    <script
+      src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"
     ></script>
 
   </head>
@@ -40,7 +47,7 @@
     <br>
 
     <!-- Kakao Map Box -->
-    <div class="blueBox" id="map" style="width: 60%; height: 400px;"></div>
+    <div class="blueBox" id="KakaoMap" style="width: 60%; height: 400px;"></div>
     <br>
 
     <!-- Google Maps Box -->

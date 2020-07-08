@@ -97,3 +97,7 @@ function drawMarker(map, positions, CircleSrc) {
     let CircleMarker = createMarker(map, positions, CircleSrc);
     CircleMarker.setMap(map);
 }
+
+// export function setOnMap(map, marker) {
+//     marker.setMap(map);
+// }
