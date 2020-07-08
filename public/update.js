@@ -1,10 +1,12 @@
 import * as kakao from './kakao.js'
-import * as googleMaps from './googleMaps.js'
+import * as naver from './naverMap.js'
+import * as google from './googleMaps.js'
 
 // Define button, resultBox, mapContainer elements
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
 let KakaoMapContainer = document.getElementById("KakaoMap");
+let NaverMapContainer = document.getElementById("NaverMap")
 let GoogleMapContainer = document.getElementById("GoogleMap");
 
 // Variable integer values declared for ease of edit
@@ -32,16 +34,20 @@ window.onload = function() {
     main();
 }
 
-// The main function
+/* The main function */
 function main() {
     // Function when user is successfully located
     function success(position) {
         let myLatitude = position.coords.latitude;
         let myLongitude = position.coords.longitude;
-        let map = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
-        kakao.showLocationMarker(map, myLatitude, myLongitude);     // show marker on user location
+        let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude);     // show marker on user location
 
-        googleMaps.initMap(GoogleMapContainer, myLatitude, myLongitude);
+        let naverMap = naver.initMap(NaverMapContainer, myLatitude, myLongitude);
+        naver.showLocationMarker(naverMap, myLatitude, myLongitude);
+        naver.showBicycleLayer(naverMap);
+
+        google.initMap(GoogleMapContainer, myLatitude, myLongitude);
         console.log(myLatitude, myLongitude);
 
         // Function when button is clicked
@@ -50,8 +56,8 @@ function main() {
           setTimeout(function() {
             // TODO: redraw markers when clicking again instead of drawing new markers
             // kakao.setOnMap(map, null);
-            kakao.showMarker(map, locationsGreen, coordinateValuesGreen, 'green');
-            kakao.showMarker(map, locationsYellow, coordinateValuesYellow, 'yellow');
+            kakao.showMarker(kakaoMap, locationsGreen, coordinateValuesGreen, 'green');
+            kakao.showMarker(kakaoMap, locationsYellow, coordinateValuesYellow, 'yellow');
           }, 2000);
           // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
           // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
