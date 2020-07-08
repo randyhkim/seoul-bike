@@ -1,9 +1,11 @@
 import * as kakao from './kakao.js'
+import * as googleMaps from './googleMaps.js'
 
 // Define button, resultBox, mapContainer elements
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
 let mapContainer = document.getElementById("map");
+let GoogleMapContainer = document.getElementById("GoogleMap");
 
 // Variable integer values declared for ease of edit
 // 서울시에서 대여소 리스트를 계속 업데이트하기 때문에 START, END 값이 계속 변경됨.
@@ -38,6 +40,8 @@ function main() {
         let myLongitude = position.coords.longitude;
         let map = kakao.showMap(mapContainer, myLatitude, myLongitude);    // draw map and return map entity
         kakao.showLocationMarker(map, myLatitude, myLongitude);     // show marker on user location
+
+        let GooogleMap = googleMaps.initGoogleMap(GoogleMapContainer, myLatitude, myLongitude);
         console.log(myLatitude, myLongitude);
 
         // Function when button is clicked
@@ -83,7 +87,8 @@ function update() {
   };
   xhttp.open(
     "GET",
-    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
+    // "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
+    "//openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
     true
   );
   xhttp.send();

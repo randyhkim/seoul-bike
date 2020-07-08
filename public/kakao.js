@@ -53,7 +53,6 @@ export function showLocationMarker(map, latitude, longitude) {
     let positions = {
         title: '현재 위치',
         latlng: new kakao.maps.LatLng(latitude, longitude)
-        // latlng: new kakao.maps.LatLng(37.5363535, 126.85730799999999)
     };
     let markerSize = new kakao.maps.Size(40, 40);
     let markerOption = {offset: new kakao.maps.Point(20, 30)};
