@@ -1,2 +1,6 @@
 public/config.js
 /practice
+
+/.firebase
+.firebaserc
+firebase.json
