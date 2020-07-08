@@ -27,7 +27,7 @@ let coordinateValuesYellow = [];  // list of floats of Yellow stationLatitude an
 let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
 
 
-// main function starts when webpage is loaded
+// main function starts when web page is loaded
 window.onload = function() {
     main();
 }
@@ -41,7 +41,7 @@ function main() {
         let map = kakao.showMap(mapContainer, myLatitude, myLongitude);    // draw map and return map entity
         kakao.showLocationMarker(map, myLatitude, myLongitude);     // show marker on user location
 
-        let GooogleMap = googleMaps.initGoogleMap(GoogleMapContainer, myLatitude, myLongitude);
+        googleMaps.initMap(GoogleMapContainer, myLatitude, myLongitude);
         console.log(myLatitude, myLongitude);
 
         // Function when button is clicked
@@ -87,8 +87,7 @@ function update() {
   };
   xhttp.open(
     "GET",
-    // "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
-    "//openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
+    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
     true
   );
   xhttp.send();
