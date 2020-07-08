@@ -24,7 +24,12 @@
 대여소들이나 사용자의 검색사항에 부합하는 대여소들을 보여주는 등 능동적인 데이터 전달을
 구현하고자 함.
 
-[Site Hosted on Firebase](https://randy-seoul-bike.web.app/)
+2020/7/8: 웹페이지 실행 시 현재 위치를 기반으로 카카오지도와 구글지도가 그려짐. 구형(LCD)과
+신형(QR) 대여소를 구별하여 각각 초록색 원과 노란색 원으로 지도 상에 표출 가능. 현재 이런 식으로
+양천구의 모든 대여소를 카카오 지도상에 표시함. 웹페이지 또한 Google Firebase에 웹호스팅하여
+아래 링크를 통해 가장 최신으로 Deploy된 버전을 접속할 수 있음.
+[https://randy-seoul-bike.web.app/](https://randy-seoul-bike.web.app/)
+[https://randy-seoul-bike.firebaseapp.com/](https://randy-seoul-bike.firebaseapp.com/)
 
 ## 참고사항
 
