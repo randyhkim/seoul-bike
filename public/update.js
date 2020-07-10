@@ -9,28 +9,38 @@ let kakaoMapContainer = document.getElementById("KakaoMap");
 let naverMapContainer = document.getElementById("NaverMap")
 let googleMapContainer = document.getElementById("GoogleMap");
 
-// Variable integer values declared for ease of edit
 // 서울시에서 대여소 리스트를 계속 업데이트하기 때문에 START, END 값이 계속 변경됨.
 // YELLOW_STATION_START를 포함한 이후 순번 대여소부터는 신형(QR형, Yellow) 대여소임.
 // 그 이전은 구형(LCD형, Green) 대여소임.
 // 이하 코드에서는 Green과 Yellow는 각각 구형(LCD)과 신형(QR) 대여소를 지칭함을 알림.
-let YANGCHEONGU_START = 3;      // 700. KB국민은행 염창역 지점 앞
-let YANGCHEONGU_END = 83;       // 797.목동아파트 1422동 1434동 사잇길
-let YELLOW_STATION_START = 57   // 767. 신정숲속마을아파트
+let BIKE_START = 1;             // 따릉이 API 요청 시작 index
+let BIKE_END = 900;             // 따릉이 API 요청 끝 index
+let YANGCHEON_START = 498;              // 700. KB국민은행 염창역 지점 앞
+let YANGCHEON_END = 578;                // 797.목동아파트 1422동 1434동 사잇길
+let YANGCHEON_YELLOW_START = 552;       // 767. 신정숲속마을아파트
+// needs revision
+let GANGSEO_START = 797;                // 1101. 개화동상사마을종점 버스정류장
+let GANGSEO_END = 878;                  // 1200. 개화광역환승센터
+let GANGSEO_YELLOW_START = 1201;        // yellow stations start at 2703
+let YEONGDEUNGPO_START = 88;            // 200. 국회의원회관
+let YEONGDEUNGPO_END = 180;             // 299. 여의도 순복음교회
+let YEONGDEUNGPO_YELLOW_START = 176;    // 295. 영등포공원 분수대 앞
+let YELLOW_STATION_START = null;
+
 
 // Url sources for marker images
 let GREEN_CIRCLE_SRC = 'https://www.bikeseoul.com/img/icon_big1.png';
 let YELLOW_CIRCLE_SRC = 'https://www.bikeseoul.com/img/icon_big2.png';
 let MY_LOCATION_SRC = 'https://www.bikeseoul.com/img/my_location_bp.gif';
 
-// list of indices of all stations in Yangcheon-gu
+// list of indices of all stations in area
 let stationList = [];
-for (let i = YANGCHEONGU_START; i < YANGCHEONGU_END; i++) {stationList.push(i);}
+// for (let i = YANGCHEON_START; i < YANGCHEON_END; i++) {stationList.push(i);}
 
-let locationsGreen = [];         // list of text of Green stationName
-let coordinateValuesGreen = [];  // list of floats of Green stationLatitude and stationLongitude
-let locationsYellow = [];         // list of text of Yellow stationName
-let coordinateValuesYellow = [];  // list of floats of Yellow stationLatitude and stationLongitude
+let locationsGreen = [];            // list of text of Green stationName
+let coordinateValuesGreen = [];     // list of floats of Green stationLatitude and stationLongitude
+let locationsYellow = [];           // list of text of Yellow stationName
+let coordinateValuesYellow = [];    // list of floats of Yellow stationLatitude and stationLongitude
 let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
 
 
@@ -59,12 +69,33 @@ function main() {
         // Google Map init
         google.initMap(googleMapContainer, myLatitude, myLongitude);
 
-        // Function when button is clicked
+        /* Function when button is clicked */
         button.onclick = function() {
           // Clear kakaoMapContainer and reinitialize Kakao Map
           kakaoMapContainer.innerHTML = "";
           let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);
           kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
+
+          // read selected area
+          let e = document.getElementById("areaSelect");
+          let area = e.options[e.selectedIndex].value;
+          console.log(area);
+          stationList = [];
+          YELLOW_STATION_START = 0;
+          if (area === "gangseo") {
+            for (let i = GANGSEO_START; i < GANGSEO_END; i++) {stationList.push(i);}
+            YELLOW_STATION_START = GANGSEO_YELLOW_START;
+          }
+          else if (area === "yangcheon") {
+            for (let i = YANGCHEON_START; i < YANGCHEON_END; i++) {stationList.push(i);}
+            YELLOW_STATION_START = YANGCHEON_YELLOW_START;
+          }
+          else if (area === "yeongdeungpo") {
+            for (let i = YEONGDEUNGPO_START; i < YEONGDEUNGPO_END; i++) {stationList.push(i);}
+            YELLOW_STATION_START = YEONGDEUNGPO_YELLOW_START;
+          }
+
+          // update locations and coordinateValues
           update();
           setTimeout(function() {
             console.log(locationsGreen);
@@ -73,7 +104,7 @@ function main() {
             console.log(coordinateValuesYellow);
             kakao.showMarker(kakaoMap, locationsGreen, coordinateValuesGreen, GREEN_CIRCLE_SRC);
             kakao.showMarker(kakaoMap, locationsYellow, coordinateValuesYellow, YELLOW_CIRCLE_SRC);
-          }, 1000);
+          }, 1500);
           // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
           // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
         };
@@ -113,7 +144,8 @@ function update() {
   };
   xhttp.open(
     "GET",
-    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key + "/json/bikeList/497/500/",
+    "http://openapi.seoul.go.kr:8088/" + seoul_bike_api_key
+        + "/json/bikeList/" + BIKE_START + "/" + BIKE_END + "/",
     true
   );
   xhttp.send();
