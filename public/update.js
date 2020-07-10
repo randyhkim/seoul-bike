@@ -70,14 +70,8 @@ function main() {
             console.log(coordinateValuesGreen);
             console.log(locationsYellow);
             console.log(coordinateValuesYellow);
-
-            let greenPositions = kakao.createPositions(locationsGreen, coordinateValuesGreen);
-            let yellowPositions = kakao.createPositions(locationsYellow, coordinateValuesYellow);
-            let greenMarkerList = kakao.createMarkerList(kakaoMap, greenPositions, GREEN_CIRCLE_SRC);
-            let yellowMarkerList = kakao.createMarkerList(kakaoMap, yellowPositions, YELLOW_CIRCLE_SRC);
-
-            kakao.showMarker(kakaoMap, greenMarkerList);
-            kakao.showMarker(kakaoMap, yellowMarkerList);
+            kakao.showMarker(kakaoMap, locationsGreen, coordinateValuesGreen, GREEN_CIRCLE_SRC);
+            kakao.showMarker(kakaoMap, locationsYellow, coordinateValuesYellow, YELLOW_CIRCLE_SRC);
           }, 1000);
           // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
           // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
