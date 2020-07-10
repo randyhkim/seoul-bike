@@ -31,7 +31,7 @@ export function showLocationMarker(map, latitude, longitude) {
             url: 'https://www.bikeseoul.com/img/my_location_bp.gif',
             // size: new naver.maps.Size(30, 30),
             // origin: new naver.maps.Point(10, 0),
-            anchor: new naver.maps.Point(11, 35)
+            // anchor: new naver.maps.Point(10, 45)
         }
     }
     let marker = new naver.maps.Marker(markerOptions);

@@ -15,8 +15,13 @@ let GoogleMapContainer = document.getElementById("GoogleMap");
 // 그 이전은 구형(LCD형, Green) 대여소임.
 // 이하 코드에서는 Green과 Yellow는 각각 구형(LCD)과 신형(QR) 대여소를 지칭함을 알림.
 let YANGCHEONGU_START = 3;      // 700. KB국민은행 염창역 지점 앞
-let YANGCHEONGU_END = 82;       // 797.목동아파트 1422동 1434동 사잇길
+let YANGCHEONGU_END = 83;       // 797.목동아파트 1422동 1434동 사잇길
 let YELLOW_STATION_START = 57   // 767. 신정숲속마을아파트
+
+// Url sources for marker images
+let GREEN_CIRCLE_SRC = 'https://www.bikeseoul.com/img/icon_big1.png';
+let YELLOW_CIRCLE_SRC = 'https://www.bikeseoul.com/img/icon_big2.png';
+let MY_LOCATION_SRC = 'https://www.bikeseoul.com/img/my_location_bp.gif';
 
 // list of indices of all stations in Yangcheon-gu
 let stationList = [];
@@ -40,25 +45,40 @@ function main() {
     function success(position) {
         let myLatitude = position.coords.latitude;
         let myLongitude = position.coords.longitude;
-        let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
-        kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude);     // show marker on user location
+        console.log(myLatitude, myLongitude);
 
+        // Kakao Map init
+        let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);     // show marker on user location
+
+        // Naver Map init
         let naverMap = naver.initMap(NaverMapContainer, myLatitude, myLongitude);
         naver.showLocationMarker(naverMap, myLatitude, myLongitude);
         naver.showBicycleLayer(naverMap);
 
+        // Google Map init
         google.initMap(GoogleMapContainer, myLatitude, myLongitude);
-        console.log(myLatitude, myLongitude);
 
         // Function when button is clicked
         button.onclick = function() {
+          let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);
+          kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
           update();
+          // TODO: clear markers first when clicking again
           setTimeout(function() {
-            // TODO: redraw markers when clicking again instead of drawing new markers
-            // kakao.setOnMap(map, null);
-            kakao.showMarker(kakaoMap, locationsGreen, coordinateValuesGreen, 'green');
-            kakao.showMarker(kakaoMap, locationsYellow, coordinateValuesYellow, 'yellow');
-          }, 2000);
+            console.log(locationsGreen);
+            console.log(coordinateValuesGreen);
+            console.log(locationsYellow);
+            console.log(coordinateValuesYellow);
+
+            let greenPositions = kakao.createPositions(locationsGreen, coordinateValuesGreen);
+            let yellowPositions = kakao.createPositions(locationsYellow, coordinateValuesYellow);
+            let greenMarkerList = kakao.createMarkerList(kakaoMap, greenPositions, GREEN_CIRCLE_SRC);
+            let yellowMarkerList = kakao.createMarkerList(kakaoMap, yellowPositions, YELLOW_CIRCLE_SRC);
+
+            kakao.showMarker(kakaoMap, greenMarkerList);
+            kakao.showMarker(kakaoMap, yellowMarkerList);
+          }, 1000);
           // without timeout, showMarker will attempt to access locations and coordinateValues before they are updated
           // refer https://stackoverflow.com/questions/48120547/array-list-length-is-zero-but-array-is-not-empty for more
         };
@@ -80,7 +100,11 @@ function main() {
 
 // AJAX from bike api and parse responseText into json
 function update() {
-  resultBox.innerHTML = "";
+  resultBox.innerHTML = "";     // Clear resultBox
+  locationsGreen = [];
+  coordinateValuesGreen = [];
+  locationsYellow = [];
+  coordinateValuesYellow = [];  // Clear location and coordinates list
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {

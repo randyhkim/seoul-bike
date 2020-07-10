@@ -4,3 +4,5 @@ public/config.js
 /.firebase
 .firebaserc
 firebase.json
+
+/venv
