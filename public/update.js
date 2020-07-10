@@ -5,9 +5,9 @@ import * as google from './googleMaps.js'
 // Define button, resultBox, mapContainer elements
 let button = document.getElementById("search");
 let resultBox = document.getElementById("results");
-let KakaoMapContainer = document.getElementById("KakaoMap");
-let NaverMapContainer = document.getElementById("NaverMap")
-let GoogleMapContainer = document.getElementById("GoogleMap");
+let kakaoMapContainer = document.getElementById("KakaoMap");
+let naverMapContainer = document.getElementById("NaverMap")
+let googleMapContainer = document.getElementById("GoogleMap");
 
 // Variable integer values declared for ease of edit
 // 서울시에서 대여소 리스트를 계속 업데이트하기 때문에 START, END 값이 계속 변경됨.
@@ -48,23 +48,24 @@ function main() {
         console.log(myLatitude, myLongitude);
 
         // Kakao Map init
-        let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
         kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);     // show marker on user location
 
         // Naver Map init
-        let naverMap = naver.initMap(NaverMapContainer, myLatitude, myLongitude);
+        let naverMap = naver.initMap(naverMapContainer, myLatitude, myLongitude);
         naver.showLocationMarker(naverMap, myLatitude, myLongitude);
         naver.showBicycleLayer(naverMap);
 
         // Google Map init
-        google.initMap(GoogleMapContainer, myLatitude, myLongitude);
+        google.initMap(googleMapContainer, myLatitude, myLongitude);
 
         // Function when button is clicked
         button.onclick = function() {
-          let kakaoMap = kakao.showMap(KakaoMapContainer, myLatitude, myLongitude);
+          // Clear kakaoMapContainer and reinitialize Kakao Map
+          kakaoMapContainer.innerHTML = "";
+          let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);
           kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
           update();
-          // TODO: clear markers first when clicking again
           setTimeout(function() {
             console.log(locationsGreen);
             console.log(coordinateValuesGreen);
