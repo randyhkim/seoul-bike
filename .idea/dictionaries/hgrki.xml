@@ -2,7 +2,10 @@
   <dictionary name="hgrki">
     <words>
       <w>kakao</w>
+      <w>mapo</w>
       <w>naver</w>
+      <w>yangcheon</w>
+      <w>yeongdeungpo</w>
     </words>
   </dictionary>
 </component>
