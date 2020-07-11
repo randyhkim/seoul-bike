@@ -27,7 +27,6 @@ let YANGCHEON_END = 577;                // 797.목동아파트 1422동 1434동 �
 /* 강서구1 */
 let GANGSEO_START = 797;                // 1101. 개화동상사마을종점 버스정류장
 let GANGSEO_END = 878;                  // 1200. 개화광역환승센터
-// let GANGSEO_YELLOW_START = 1201;        // yellow stations start at 2703
 /* 영등포구1 */
 let YEONGDEUNGPO_START = 88;            // 200. 국회의원회관
 let YEONGDEUNGPO_END = 180;             // 299. 여의도 순복음교회
@@ -41,12 +40,15 @@ let BIKE_END2 = 2000;
 let GANGSEO_START2 = 800;               // 2701. 마곡나루역 5번출구 뒤편
 let GANGSEO_END2 = 841;                 // 2746. 수명산파크 4단지 411동 앞
 // let GANGSEO_YELLOW_START = 803;         // 2703. 서울도시가스 앞
+/* 영등포구2 */
+let YEONGDEUNGPO_START2 = 924;          // 3201. 당산skv1센터
+let YEONGDEUNGPO_END2 = 937;            // 3221. 서울특별시 남부교육지원청
 
-// ST-1993 (767. 신정숲속마을아파트) is the first yellow station (for now).
+// ST-1968 (295. 영등포공원 분수대 앞) is the first yellow station (for now).
 // TODO: this value is only provisional; actual value required
 // TODO: import API data into Excel file for better data analysis
 // All stations with id numbers larger than this are yellow stations
-let FIRST_YELLOW_STATION_ID = 1993;
+let FIRST_YELLOW_STATION_ID = 1968;
 
 // Url sources for marker images
 let GREEN_CIRCLE_SRC = 'https://www.bikeseoul.com/img/icon_big1.png';
@@ -98,14 +100,14 @@ function main() {
           let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);
           kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
 
-          // read selected area
+          // read area from dropdown option areaSelect
           let e = document.getElementById("areaSelect");
           let area = e.options[e.selectedIndex].value;
           console.log(area);
           // clear stationList before adding new station indices
           stationList1 = [];
           stationList2 = [];
-          // add station indices to stationList1 and stationList2
+          // add station indices to stationList1 and stationList2 according to area
           if (area === "gangseo") {
             for (let i = GANGSEO_START; i <= GANGSEO_END; i++) {stationList1.push(i);}
             for (let i = GANGSEO_START2; i <= GANGSEO_END2; i++) {stationList2.push(i);}
@@ -115,6 +117,7 @@ function main() {
           }
           else if (area === "yeongdeungpo") {
             for (let i = YEONGDEUNGPO_START; i <= YEONGDEUNGPO_END; i++) {stationList1.push(i);}
+            for (let i = YEONGDEUNGPO_START2; i <= YEONGDEUNGPO_END2; i++) {stationList2.push(i);}
           }
 
           // update locations and coordinateValues
