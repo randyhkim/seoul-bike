@@ -24,6 +24,8 @@ let MY_LOCATION_SRC = 'https://www.bikeseoul.com/img/my_location_bp.gif';
 
 // API key for seoul bike API is saved in a private file
 let seoul_bike_api_key = config.SEOUL_BIKE_API_KEY;
+// Default zoom-in level when map is first initialized
+let DEFAULT_ZOOM = 5;
 
 
 // main function starts when web page is loaded
@@ -39,7 +41,7 @@ function main() {
         let myLongitude = position.coords.longitude;
         console.log(myLatitude, myLongitude);
         // Kakao Map init
-        let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);    // draw map and return map entity
+        let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude, DEFAULT_ZOOM);    // draw map and return map entity
         kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);     // show marker on user location
         // Naver Map init
         let naverMap = naver.initMap(naverMapContainer, myLatitude, myLongitude);
@@ -51,17 +53,17 @@ function main() {
         /* function when button is clicked */
         // async waits for update() to be finished before drawing markers
         button.onclick = async function() {
-          // Clear kakaoMapContainer and reinitialize Kakao Map
-          kakaoMapContainer.innerHTML = "";
-          let kakaoMap = kakao.showMap(kakaoMapContainer, myLatitude, myLongitude);
-          kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
-
           // read area from dropdown option areaSelect and create stationsLists
           // stationList1 is a list of indices from the first API call
           // stationList2 is a list of indices from the second API call
           let e = document.getElementById("areaSelect");
           let area = e.options[e.selectedIndex].value;
-          let {stationList1, stationList2} = createStationList(area);
+          let {stationList1, stationList2, areaLatitude, areaLongitude, zoom} = createStationList(area);
+
+          // Clear kakaoMapContainer and reinitialize Kakao Map
+          kakaoMapContainer.innerHTML = "";
+          let kakaoMap = kakao.showMap(kakaoMapContainer, areaLatitude, areaLongitude, zoom);
+          kakao.showLocationMarker(kakaoMap, myLatitude, myLongitude, MY_LOCATION_SRC);
 
           // TODO: fix bug that requires setTimeout despite await statement
           // update locations and coordinateValues
@@ -111,7 +113,7 @@ function update(stationList1, stationList2) {
         coordinateValuesYellow: []
       };
       // request2 must be followed by request1, but the use of setTimeout causes
-      // conflict with the async button function. Thus, this if-else statmenet
+      // conflict with the async button function. Thus, this if-else statement
       // takes a sync approach.
       if (stationList2.length != 0) {
           request1(stationList1, stations);
@@ -211,25 +213,38 @@ function stationUpdate(msg, index, stations) {
   }
 }
 
+/* takes area name and returns stationList1 and stationList2 and
+ * latitude, longitude, zoom values to be used when re-drawing map */
 function createStationList(area) {
     let stationList1 = [];
     let stationList2 = [];
+    // default location 서울시청 Seoul City Hall
+    let areaLatitude = 37.5663;
+    let areaLongitude = 126.9779;
+    let zoom = 7;
 
     // add station indices to stationList1 and stationList2 according to area
     if (area === "gangseo") {
         stationList1 = gangseo1;
         stationList2 = gangseo2;
+        areaLatitude = 37.556358;
+        areaLongitude = 126.839379;
     }
     else if (area === "mapo") {
         stationList1 = mapo1;
         stationList2 = mapo2;
+        zoom = 8;
     }
     else if (area === "yangcheon") {
         stationList1 = yangcheon1;
+        areaLatitude = 37.528860;
+        areaLongitude = 126.857166;
     }
     else if (area === "yeongdeungpo") {
         stationList1 = yeongdeungpo1;
         stationList2 = yeongdeungpo2;
+        areaLatitude = 37.519065;
+        areaLongitude = 126.908679;
     }
-    return {stationList1, stationList2};
+    return {stationList1, stationList2, areaLatitude, areaLongitude, zoom};
 }

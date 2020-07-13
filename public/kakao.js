@@ -2,13 +2,14 @@
 
 
 /* Shows Kakao Map and returns 'map' entity */
-export function showMap(mapContainer, latitude, longitude) {
+export function showMap(mapContainer, latitude, longitude, zoom) {
     // mapContainer refers to the HTML element on which Kakao Map is drawn
     // latitude and longitude are coordinate values at which
-    // the map will be centered when initially shown on the webpage
+    // the map will be centered when drawn on the webpage
+    // zoom is an integer value referring to the zoom-level of the map
     let mapOption = {
       center: new kakao.maps.LatLng(latitude, longitude),
-      level: 5
+      level: zoom
     };
     return new kakao.maps.Map(mapContainer, mapOption);
     // Map entity is inputted in other functions to specify which map to perform those functions on
